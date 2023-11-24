@@ -48,6 +48,9 @@ void loop()
 
 //#include <Wire.h>
 #include "DFRobot_AS3935_I2C.h"
+#include "MQ135.h"
+
+
 
 volatile int8_t AS3935IsrTrig = 0;
 
@@ -75,7 +78,9 @@ volatile int8_t AS3935IsrTrig = 0;
 
 void AS3935_ISR();
 
-DFRobot_AS3935_I2C  lightning0((uint8_t)IRQ_PIN, (uint8_t)AS3935_I2C_ADDR);
+DFRobot_AS3935_I2C  lightning0((uint8_t)IRQ_PIN, (uint8_t)AS3935_I2C_ADDR); //Senzor blezků
+MQ135 SenzorAir = MQ135(5); //Senzor kvality vzduchu
+
 
 void setup()
 {
@@ -113,6 +118,8 @@ void loop()
   while (AS3935IsrTrig == 0) {delay(1);}
   delay(5);
 
+  float ppm = SenzorAir.getPPM();
+  Serial.print(ppm);
   // Reset interrupt flag
   AS3935IsrTrig = 0;
 
