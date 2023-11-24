@@ -46,7 +46,7 @@ void loop()
     delay(5000);           // wait 5 seconds for next scan
 } */
 
-#include <Wire.h>
+//#include <Wire.h>
 #include "DFRobot_AS3935_I2C.h"
 
 volatile int8_t AS3935IsrTrig = 0;
